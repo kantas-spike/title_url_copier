@@ -1,6 +1,5 @@
-// 参考: https://github.com/GoogleChrome/chrome-extensions-samples
 function copyToClipboard(title, url) {
-  info = `${title}\n\n${url}`
+  info = `[${title}](${url})`
   navigator.clipboard.writeText(info).then(() => {
     /* clipboard successfully set */
     // console.log("success", info)
