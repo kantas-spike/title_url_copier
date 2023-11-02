@@ -4,7 +4,9 @@
   "description": "Chrome extension to copy the tile and URL of a web page.",
   "main": "dist/background.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm ./dist/*.js",
+    "build": "npx tsc --project ./tsconfig.json ",
+    "check": "npx tsc --project ./tsconfig.json --noEmit "
   },
   "author": "",
   "license": "ISC",
