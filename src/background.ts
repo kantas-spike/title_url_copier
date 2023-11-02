@@ -1,5 +1,5 @@
-function copyToClipboard(title, url) {
-  info = `[${title}](${url})`;
+function copyToClipboard(title: string | undefined, url: string) {
+  const info = `[${title}](${url})`;
   navigator.clipboard.writeText(info).then(
     () => {
       /* clipboard successfully set */
@@ -12,11 +12,14 @@ function copyToClipboard(title, url) {
   );
 }
 
-chrome.action.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener((tab: chrome.tabs.Tab) => {
+  if (tab.url === undefined || tab.id === undefined) {
+    return;
+  }
   if (!tab.url.includes("chrome://")) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      function: copyToClipboard,
+      func: copyToClipboard,
       args: [tab.title, tab.url],
     });
   }
