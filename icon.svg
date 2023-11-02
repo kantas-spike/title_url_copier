@@ -28,9 +28,9 @@
      inkscape:document-units="mm"
      showgrid="true"
      inkscape:zoom="5.72"
-     inkscape:cx="37.412587"
+     inkscape:cx="36.975524"
      inkscape:cy="62.237762"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="g421">
     <inkscape:grid
        type="xygrid"
        id="grid132" />
@@ -38,41 +38,39 @@
   <defs
      id="defs2" />
   <g
-     inkscape:label="Layer 1"
+     id="g421"
+     transform="translate(-0.57562549,-0.10730699)"
      inkscape:groupmode="layer"
-     id="layer1">
+     inkscape:label="slices">
     <rect
-       style="fill:#0a16db;stroke:none;stroke-width:0.765;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dashoffset:20.4964;fill-opacity:1"
+       style="fill:#0a16db;fill-opacity:1;stroke:none;stroke-width:0.765;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dashoffset:20.4964"
        id="rect7678"
        width="33.866665"
        height="33.866665"
        x="0"
-       y="0" />
-    <g
-       id="g421"
-       transform="translate(-0.57562548,-0.10730699)">
-      <text
-         xml:space="preserve"
-         style="font-size:22.5778px;line-height:1.25;font-family:'BIZ UDGothic';-inkscape-font-specification:'BIZ UDGothic';fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
+       y="0"
+       transform="translate(0.57562548,0.10730699)" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.5778px;line-height:1.25;font-family:'BIZ UDGothic';-inkscape-font-specification:'BIZ UDGothic';fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
+       x="2.1277678"
+       y="18.317308"
+       id="text242"><tspan
+         sodipodi:role="line"
+         id="tspan240"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
          x="2.1277678"
-         y="18.317308"
-         id="text242"><tspan
-           sodipodi:role="line"
-           id="tspan240"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
-           x="2.1277678"
-           y="18.317308">T</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:22.5778px;line-height:1.25;font-family:'BIZ UDGothic';-inkscape-font-specification:'BIZ UDGothic';fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
+         y="18.317308">T</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.5778px;line-height:1.25;font-family:'BIZ UDGothic';-inkscape-font-specification:'BIZ UDGothic';fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
+       x="15.218168"
+       y="31.638987"
+       id="text404"><tspan
+         sodipodi:role="line"
+         id="tspan402"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
          x="15.218168"
-         y="31.638987"
-         id="text404"><tspan
-           sodipodi:role="line"
-           id="tspan402"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#dbcf0a;fill-opacity:1;stroke-width:0.264583"
-           x="15.218168"
-           y="31.638987">U</tspan></text>
-    </g>
+         y="31.638987">U</tspan></text>
   </g>
 </svg>
