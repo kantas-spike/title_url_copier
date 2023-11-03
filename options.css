@@ -1,0 +1,57 @@
+label {
+  font-weight: bold;
+}
+
+input {
+  padding: 0.3rem 0.5rem;
+}
+
+.description {
+  color: #555;
+  font-size: small;
+}
+
+
+.description table {
+  border-collapse: collapse;
+}
+
+.description th, td {
+  border:1px solid #555;
+  padding: 0.2rem 0.5rem;
+}
+
+#form {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+  grid-template-columns: [label] 100px [input] 1fr;
+}
+
+#form > label {
+  grid-column: label;
+}
+
+#form > input {
+  grid-column: input;
+}
+
+#form > .description {
+  grid-column: input;
+}
+
+#form > .buttons {
+  margin-top: 2rem;
+  grid-column: input;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+#save {
+  padding: 0.3rem 0.5rem;
+}
+
+#status {
+  color: #005;
+}

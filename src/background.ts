@@ -1,8 +1,14 @@
 const CopyiedURLNotification = "CopiedURL";
 const FailedToCopyURLNotification = "FailedToCopyURL";
 
-function copyToClipboard(title: string | undefined, url: string) {
-  const info = `[${title}](${url})`;
+function copyToClipboard(
+  title: string | undefined,
+  url: string,
+  format: string
+) {
+  const info = format
+    .replaceAll("${title}", title ?? "")
+    .replaceAll("${url}", url);
   return navigator.clipboard
     .writeText(info)
     .then(() => {
@@ -15,16 +21,20 @@ function copyToClipboard(title: string | undefined, url: string) {
     });
 }
 
-chrome.action.onClicked.addListener((tab: chrome.tabs.Tab) => {
+chrome.action.onClicked.addListener(async (tab: chrome.tabs.Tab) => {
   if (tab.url === undefined || tab.id === undefined) {
     return;
   }
+
+  const initStorageCache = await chrome.storage.sync.get();
+  console.log(initStorageCache);
+
   if (!tab.url.includes("chrome://")) {
     chrome.scripting
       .executeScript({
         target: { tabId: tab.id },
         func: copyToClipboard,
-        args: [tab.title, tab.url],
+        args: [tab.title, tab.url, initStorageCache.format],
       })
       .then((injectionResults) => {
         for (const { frameId, result } of injectionResults) {

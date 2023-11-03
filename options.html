@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Options</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div>
+      <div id="form">
+        <label for="format">フォーマット</label>
+        <input id="format" type="text" />
+        <div class="description">
+          <p>
+            ページのタイトルとURLを指定したフォーマットに変換してクリップボードにコピーします。<br />
+            フォーマットに利用できる変数は以下になります。
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>変数</th>
+                <th>説明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${title}</td>
+                <td>ページのタイトル</td>
+              </tr>
+              <tr>
+                <td>${url}</td>
+                <td>ページのURL</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="buttons">
+          <button id="save">保存</button>
+          <div id="status"></div>
+        </div>
+      </div>
+      <script src="dist/options.js"></script>
+    </div>
+  </body>
+</html>
