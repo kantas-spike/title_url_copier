@@ -35,7 +35,43 @@
             </tbody>
           </table>
         </div>
-
+        <hr />
+        <div class="full">
+          <input id="use-hash" type="checkbox" /><label for="use-hash">
+            ページのURLに`#xxx`のようなフラグメントがあれば専用のフォーマットを利用する
+          </label>
+        </div>
+        <input id="hash-format" type="text" />
+        <div id="hash-format-desc" class="description">
+          <p>
+            ページのURLにフラグメント(#xxx)が存在する場合、ページのタイトルとURLを指定したフォーマットに変換してクリップボードにコピーします。<br />
+            フォーマットに利用できる変数は以下になります。
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>変数</th>
+                <th>説明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${hashTitle}</td>
+                <td>
+                  フラグメント識別子(#xxx)に対応する要素のテキスト(innerText)
+                </td>
+              </tr>
+              <tr>
+                <td>${title}</td>
+                <td>ページのタイトル</td>
+              </tr>
+              <tr>
+                <td>${url}</td>
+                <td>ページのURL</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="buttons">
           <button id="save">保存</button>
           <div id="status"></div>

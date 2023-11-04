@@ -48,6 +48,12 @@ input {
   align-items: center;
 }
 
+#form > .full {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+}
+
 #save {
   padding: 0.3rem 0.5rem;
 }
