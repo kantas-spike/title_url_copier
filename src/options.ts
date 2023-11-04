@@ -1,3 +1,9 @@
+const defaultOptions: LinkFormatOptions = {
+  format: "[%{title}](%{url})",
+  useHashFormat: true,
+  hashFormat: "[%{hashTitle} - %{title}](%{url})",
+};
+
 const setupUseHashArea = (useHash: boolean, hashFormat?: string) => {
   const useHashChk = document.getElementById("use-hash") as HTMLInputElement;
   const hashFormatInput = document.getElementById(
@@ -20,17 +26,19 @@ const setupUseHashArea = (useHash: boolean, hashFormat?: string) => {
 
 // Saves options to chrome.storage
 const saveOptions = () => {
-  const format = document.getElementById("format") as HTMLInputElement;
-  const useHash = document.getElementById("use-hash") as HTMLInputElement;
-  const hashFormat = document.getElementById("hash-format") as HTMLInputElement;
-  let data: { [key: string]: any } = {};
-  if (format) {
-    data.format = format.value;
+  const formatElm = document.getElementById("format") as HTMLInputElement;
+  const useHashElm = document.getElementById("use-hash") as HTMLInputElement;
+  const hashFormatElm = document.getElementById(
+    "hash-format"
+  ) as HTMLInputElement;
+  const data: LinkFormatOptions = { ...defaultOptions };
+  if (formatElm) {
+    data.format = formatElm.value;
   }
-  if (useHash) {
-    data.useHashFormat = useHash.checked;
-    if (useHash.checked && hashFormat) {
-      data.hashFormat = hashFormat.value;
+  if (useHashElm) {
+    data.useHashFormat = useHashElm.checked;
+    if (useHashElm.checked && hashFormatElm) {
+      data.hashFormat = hashFormatElm.value;
     }
   }
   chrome.storage.sync.set(data, () => {
@@ -48,28 +56,26 @@ const saveOptions = () => {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 const restoreOptions = () => {
-  const format = document.getElementById("format") as HTMLInputElement;
-  chrome.storage.sync.get(
-    {
-      format: "[${title}](${url})",
-      useHashFormat: true,
-      hashFormat: "[${hashTitle} - ${title}](${url})",
-    },
-    (items) => {
-      if (format) {
-        format.value = items.format;
-      }
-      setupUseHashArea(items.useHashFormat, items.hashFormat);
+  const formatElm = document.getElementById("format") as HTMLInputElement;
+  chrome.storage.sync.get({ ...defaultOptions }, (items) => {
+    const options = items as LinkFormatOptions;
+    if (formatElm) {
+      formatElm.value = options.format;
     }
-  );
+    setupUseHashArea(options.useHashFormat, options.hashFormat);
+  });
 };
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.getElementById("save")?.addEventListener("click", saveOptions);
-document
-  .getElementById("use-hash")
-  ?.addEventListener("change", async (event) => {
-    const element = event.target as HTMLInputElement;
-    const info = await chrome.storage.sync.get("hashFormat");
-    setupUseHashArea(element.checked, info.hashFormat);
-  });
+document.getElementById("use-hash")?.addEventListener("change", (event) => {
+  const element = event.target as HTMLInputElement;
+  chrome.storage.sync
+    .get("hashFormat")
+    .then((info) => {
+      setupUseHashArea(element.checked, info.hashFormat as string);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});

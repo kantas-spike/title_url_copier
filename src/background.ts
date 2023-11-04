@@ -1,14 +1,17 @@
-const CopyiedURLNotification = "CopiedURL";
-const FailedToCopyURLNotification = "FailedToCopyURL";
+type LinkFormatOptions = {
+  format: string;
+  useHashFormat: boolean;
+  hashFormat: string;
+};
 
 function copyToClipboard(
   title: string | undefined,
   url: string,
-  options: { [key: string]: any }
+  options: LinkFormatOptions
 ) {
-  function getHashTargetTextFromUrl(url: string) {
-    const targetURL = new URL(url);
-    const hash = targetURL.hash;
+  function getHashTargetTextFromUrl(_url: string) {
+    const targetURL = new URL(_url);
+    const { hash } = targetURL;
     const hashId = decodeURIComponent(hash.replace("#", ""));
     const targetFragment = document.getElementById(hashId);
     return targetFragment?.innerText.replace(/[\n\r]+|[\s]{2,}/g, " ");
@@ -25,35 +28,32 @@ function copyToClipboard(
         maxLength - truncatedSuffix.length
       );
       return truncatedString + truncatedSuffix;
-    } else {
-      return targetString;
     }
+    return targetString;
   }
 
   function populateTemplate(
-    title: string | undefined,
-    url: string,
-    options: { [key: string]: any }
+    _title: string | undefined,
+    _url: string,
+    _options: LinkFormatOptions
   ) {
-    const hashTargetText = getHashTargetTextFromUrl(url);
-    if (hashTargetText && options.useHashFormat) {
-      return options.hashFormat
-        .replaceAll("${title}", title ?? "")
-        .replaceAll("${url}", url)
-        .replaceAll("${hashTitle}", truncateString(hashTargetText));
-    } else {
-      return options.format
-        .replaceAll("${title}", title ?? "")
-        .replaceAll("${url}", url);
+    const hashTargetText = getHashTargetTextFromUrl(_url);
+    const { format, hashFormat } = _options;
+    if (hashTargetText && _options.useHashFormat) {
+      return hashFormat
+        .replaceAll("%{title}", _title ?? "")
+        .replaceAll("%{url}", _url)
+        .replaceAll("%{hashTitle}", truncateString(hashTargetText));
     }
+    return format
+      .replaceAll("%{title}", _title ?? "")
+      .replaceAll("%{url}", _url);
   }
 
   const info = populateTemplate(title, url, options);
   return navigator.clipboard
     .writeText(info)
-    .then(() => {
-      return info;
-    })
+    .then(() => info)
     .catch((error) => {
       /* clipboard write failed */
       console.error(`clipboard write failed!!: ${error}`);
@@ -61,40 +61,45 @@ function copyToClipboard(
     });
 }
 
-chrome.action.onClicked.addListener(async (tab: chrome.tabs.Tab) => {
+chrome.action.onClicked.addListener((tab: chrome.tabs.Tab) => {
   if (tab.url === undefined || tab.id === undefined) {
     return;
   }
-  const url = new URL(tab.url);
-  const options = await chrome.storage.sync.get();
-
-  if (!tab.url.includes("chrome://")) {
-    chrome.scripting
-      .executeScript({
-        target: { tabId: tab.id },
-        func: copyToClipboard,
-        args: [tab.title, tab.url, options],
-      })
-      .then((injectionResults) => {
-        for (const { frameId, result } of injectionResults) {
-          let options: chrome.notifications.NotificationOptions<true>;
-          if (result) {
-            options = {
-              iconUrl: chrome.runtime.getURL("../icon32.png"),
-              message: `クリップボードにコピーしました: \n${result}`,
-              type: "basic",
-              title: "Title and URL Copier",
-            };
-          } else {
-            options = {
-              iconUrl: chrome.runtime.getURL("../icon32.png"),
-              message: `クリップボードにコピーに失敗しました`,
-              type: "basic",
-              title: "Title and URL Copier",
-            };
-          }
-          chrome.notifications.create(options);
-        }
-      });
+  if (tab.url.includes("chrome://")) {
+    return;
   }
+
+  chrome.storage.sync
+    .get()
+    .then((options) =>
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id as number },
+        func: copyToClipboard,
+        args: [tab.title, tab.url as string, options as LinkFormatOptions],
+      })
+    )
+    .then((injectionResults) => {
+      injectionResults.forEach(({ result }) => {
+        let notificationOptions: chrome.notifications.NotificationOptions<true>;
+        if (result) {
+          notificationOptions = {
+            iconUrl: chrome.runtime.getURL("../icon32.png"),
+            message: `クリップボードにコピーしました: \n${result}`,
+            type: "basic",
+            title: "Title and URL Copier",
+          };
+        } else {
+          notificationOptions = {
+            iconUrl: chrome.runtime.getURL("../icon32.png"),
+            message: "クリップボードにコピーに失敗しました",
+            type: "basic",
+            title: "Title and URL Copier",
+          };
+        }
+        chrome.notifications.create(notificationOptions);
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
