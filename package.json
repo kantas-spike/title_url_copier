@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rm ./dist/*.js",
     "build": "npx tsc --project ./tsconfig.json ",
-    "check": "npx tsc --project ./tsconfig.json --noEmit "
+    "check": "npx tsc --project ./tsconfig.json --noEmit ",
+    "watch": "npx tsc -w "
   },
   "author": "",
   "license": "ISC",
