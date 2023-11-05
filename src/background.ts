@@ -1,9 +1,3 @@
-type LinkFormatOptions = {
-  format: string;
-  useHashFormat: boolean;
-  hashFormat: string;
-};
-
 function copyToClipboard(
   title: string | undefined,
   url: string,
